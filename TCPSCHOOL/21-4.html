@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="UTF-8">
+	<title>JavaScript Array</title>
+</head>
+
+<body>
+
+	<h1>constructor 프로퍼티</h1>
+
+	<script>
+		function isArray(a) {
+			return a.constructor.toString().indexOf("Array") > -1;
+		}
+
+		var arr = [1, true, "JavaScript"];			// 배열 생성
+
+		document.write(arr.constructor + "<br>");	// constructor 프로퍼티의 값 출력
+		document.write(arr.constructor.toString() + "<br>");	// function Array() {[native code]}
+		document.write(arr.constructor.toString().indexOf("Array") + "<br>");	// 10
+		document.write(isArray(arr))				// true
+	</script>
+
+</body>
+
+</html>
