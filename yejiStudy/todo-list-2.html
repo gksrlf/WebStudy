@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .complete-tr {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>TODO LIST</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-7">
+                <input id="search" type="text" class="form-control" placeholder="search">
+            </div>
+            <div class="col-2">
+                <button id="btn-add" type="button" class="btn btn-secondary w-100" data-bs-toggle="modal" data-bs-target="#add-modal">ADD</button>
+            </div>
+            <div class="col-3">
+                <input id="option" type="checkbox">
+                <label for="option">할 일만 보이기</label>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-striped text-center align-middle">
+                <thead>
+                    <th style="width: 7%;">#</th>
+                    <th>할 일</th>
+                    <th style="width: 15%;">기한</th>
+                    <th style="width: 15%;">중요도</th>
+                    <th style="width: 20%;" colspan="2"></th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>밥먹기</td>
+                        <td>2021-04-29</td>
+                        <td>상</td>
+                        <td>버튼1</td>
+                        <td>버튼2</td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>과자먹기</td>
+                        <td>2021-05-20</td>
+                        <td>하</td>
+                        <td><button type="button" class="btn btn-success complete">완료</button></td>
+                        <td><button type="button" class="btn btn-danger remove">삭제</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="add-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Add Modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <label>할 일</label>
+                        </div>
+                        <div class="col-12">
+                            <input id="modal-title" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label>기한</label>
+                        </div>
+                        <div class="col-12">
+                            <input id="modal-date" type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label>중요도</label>
+                        </div>
+                        <div class="col-12">
+                            <span>
+                                <input name="radio" type="radio" value="0">
+                                <label>상</label>
+                            </span>
+                            <span>
+                                <input name="radio" type="radio" value="1">
+                                <label>중</label>
+                            </span>
+                            <span>
+                                <input name="radio" type="radio" value="2">
+                                <label>하</label>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btn-modal-close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="btn-modal-add" type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+
+            // 할일 추가
+            let index = 1;
+            $('#btn-modal-add').on('click', function() {
+                let title = $('#modal-title').val();
+                let date = $('#modal-date').val();
+                let weightVal = $('#input[name="radio"]:selected').val();
+
+                let weight = '';
+                if(weightVal == "0") {
+                    weight = "상";
+                } else if (weightVal == "1") {
+                    weight = "중";
+                } else {
+                    weight = "하";
+                }
+
+                let row = `<tr>
+                                <td>${index++}</td>
+                                <td>${title}</td>
+                                <td>${date}</td>
+                                <td>${weight}</td>
+                                <td><button type="button" class="btn btn-success complete">완료</button></td>
+                                <td><button type="button" class="btn btn-danger remove">삭제</button></td>
+                            </tr>`;
+
+                $('table > tbody').append(row);
+                $('#btn-modal-close').trigger('click');
+            });
+
+            // 할일 삭제
+            $(document).on('click', '.remove', function() {
+                $(this).closest('tr').remove();
+            });
+
+            $(document).on('click', '.complete', function() {
+                let row = $(this).closest('tr');
+                let tr = $(row).children().get(1);
+
+                if($(tr).hasClass('complete-tr')) {
+                    // 완료된 일 일때
+                    $(this).text('완료');
+                } else {
+                    // 아닐때
+                    $(this).text('미완료');
+                }
+                $(tr).toggleClass('complete-tr');
+                $('#option').trigger('change');
+            });
+
+            // 검색
+            $('#search').on('input', function() {
+                $('table tbody tr').filter(function(){
+                    let td = $(this).children().get(1);
+                    let text = $(td).text();
+                    if(text.toUpperCase().indexOf($('#search').val()) > -1) {
+                        $(this).css("display", "");
+                    } else {
+                        $(this).css("display", "none");
+                    }
+                });
+                hide();
+            });
+
+            // 할일만보이기
+            $('#option').on('change', hide);
+
+            function hide() {
+                if($('#option').is(":checked")) {
+                    $('.complete-tr').each(function() {
+                        $(this).closest('tr').css("display", "none");
+                    });
+                } else {
+                    $('table tbody tr').css('display', '');
+                }
+            }
+
+
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>
