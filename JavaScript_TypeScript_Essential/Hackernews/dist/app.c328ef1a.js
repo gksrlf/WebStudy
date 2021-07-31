@@ -130,29 +130,38 @@ function getData(url) {
   return JSON.parse(ajax.response);
 }
 
-var newsFeed = getData(NEWS_URL);
-var ul = document.createElement('ul');
-window.addEventListener('hashchange', function () {
+function newsFeed() {
+  var newsFeed = getData(NEWS_URL);
+  var newsList = [];
+  newsList.push("<ul>");
+
+  for (var i = 0; i < 10; i++) {
+    newsList.push("\n        <li>\n            <a href=\"#".concat(newsFeed[i].id, "\">\n                ").concat(newsFeed[i].title, " (").concat(newsFeed[i].comments_count, ")\n            </a>\n        </li>\n        "));
+  }
+
+  newsList.push("</ul>");
+  container.innerHTML = newsList.join('');
+}
+
+function newsDetail() {
   var id = location.hash.substr(1);
   var newsContent = getData(CONTENT_URL.replace('@id', id));
   var title = document.createElement('h1');
-  title.innerHTML = newsContent.title;
-  content.appendChild(title);
-});
-
-for (var i = 0; i < 10; i++) {
-  var div = document.createElement('div');
-  var li = document.createElement('li');
-  var a = document.createElement('a');
-  div.innerHTML = "\n    <li>\n        <a href=\"#".concat(newsFeed[i].id, "\">\n            ").concat(newsFeed[i].title, " (").concat(newsFeed[i].comments_count, ")\n        </a>\n    </li>\n    ");
-  a.href = "#".concat(newsFeed[i].id);
-  a.innerHTML = "".concat(newsFeed[i].title, " (").concat(newsFeed[i].comments_count, ")");
-  a.addEventListener('click', function () {});
-  ul.appendChild(div.firstElementChild);
+  container.innerHTML = "\n        <h1>".concat(newsContent.title, "</h1>\n\n        <div>\n            <a href=\"#\">\uBAA9\uB85D\uC73C\uB85C</a>\n        </div>\n    ");
 }
 
-container.appendChild(ul);
-container.appendChild(content);
+function router() {
+  var routePath = location.hash;
+
+  if (routePath === '') {
+    newsFeed();
+  } else {
+    newsDetail();
+  }
+}
+
+window.addEventListener('hashchange', router);
+router();
 },{}],"C:/Users/enfna/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
