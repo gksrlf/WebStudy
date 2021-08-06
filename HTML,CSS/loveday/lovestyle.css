@@ -1,0 +1,63 @@
+.navbar
+{
+
+  background-color: #FFFFFF;
+  text-align: center;
+}
+.main
+{
+  background-image: linear-gradient(135deg, #B0A8FF 0%, #786FFF 100%);
+  min-height: calc(100vh - 66px);
+  text-align: center;
+  padding: 2.5%;
+}
+.conteiner
+{
+
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+  border-radius: 25px;
+  padding: 2% 5%;
+  display: inline-block;
+}
+.image img
+{
+  vertical-align: middle;
+  padding:5px;
+}
+.conteiner h1
+{
+  font-size: 24px;
+  color: #4A4A4A;
+  margin: 0;
+  margin-bottom: 28px;
+}
+.conteiner> h1 >span
+{
+  color : #786FFF;
+}
+.part
+{
+  font-size: 20px;
+
+}
+.date-row
+{
+  border: 0px solid #786FFF;
+
+}
+#check
+{
+  padding: 2.5%;
+  margin : 2.5%;
+  width:100%;
+  border-radius: 10px;
+  background-color: #786FFF;
+  color: #FFFFFF;
+  font-size: 20px;
+}
+
+#text
+{
+  border: 0px solid #786FFF;
+}
