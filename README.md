@@ -1,3 +1,2 @@
 # WebStudy
-## A collection of files studied for web development
---
+##### A collection of files studied for web development
