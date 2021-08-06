@@ -1,1 +1,3 @@
-### This is a simple login site that I made when I started studying web development.
+### Simple websites using HTML and CSS while learning web development.
+--
+##### HTML, CSS
