@@ -9,6 +9,8 @@
 - JavaScript
 
 # 내용
+![표준사이트1](https://user-images.githubusercontent.com/59948163/128621849-f0d93ff7-c5df-44a5-9776-ab2ec3a6044d.PNG)
+![표준사이트2](https://user-images.githubusercontent.com/59948163/128621853-0e0118c0-f25f-4612-a565-544de1d05083.PNG)
 
 
 
